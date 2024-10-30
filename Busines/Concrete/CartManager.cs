@@ -1,4 +1,5 @@
 ﻿using Busines.Abstract;
+using Busines.Constan;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,49 +23,73 @@ namespace Busines.Concrete
             _cartWriteRepository = cartWriteRepository;
         }
 
-        public Task<IResult> AddAsync(Cart entity)
+        public async Task<IResult> AddAsync(Cart entity)
         {
-            throw new NotImplementedException();
+            var result = await _cartWriteRepository.AddAsync(entity);
+            await _cartWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.AddedSuccesfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public Task<IResult> AddRangeAsync(List<Cart> entities)
+        public async Task<IResult> AddRangeAsync(List<Cart> entities)
         {
-            throw new NotImplementedException();
+            var result = await _cartWriteRepository.AddRangeAsync(entities);
+            await _cartWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.AddedSuccesfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public IResult Delete(Cart entity)
+        public async Task<IResult> Delete(Cart entity)
         {
-            throw new NotImplementedException();
+            var result = _cartWriteRepository.Delete(entity);
+            await _cartWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public Task<IResult> Delete(int id)
+        public async Task<IResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            var result = await _cartWriteRepository.Delete(id);
+            await _cartWriteRepository.SaveAsync();
+            if (result) 
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public IResult DeleteRange(List<Cart> entities)
+        public async Task<IResult> DeleteRange(List<Cart> entities)
         {
-            throw new NotImplementedException();
+            var result = _cartWriteRepository.DeleteRange(entities);
+            await _cartWriteRepository.SaveAsync();
+            if (result) 
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
         public IDataResult<List<Cart>> GetAll()
         {
-            throw new NotImplementedException();
+            var result = _cartReadRepository.GetAll();
+            return new SuccessDataResult<List<Cart>>(result.ToList());
         }
 
-        public Task<IDataResult<Cart>> GetByIdAsync(int id)
+        public async Task<IDataResult<Cart>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = await _cartReadRepository.GetByIdAsync(id);
+            return new SuccessDataResult<Cart>(result);
         }
 
-        public Task<IDataResult<Cart>> GetSingleAsync(Expression<Func<Cart, bool>> method)
+        public async Task<IDataResult<Cart>> GetSingleAsync(Expression<Func<Cart, bool>> method)
         {
-            throw new NotImplementedException();
+            var result = await _cartReadRepository.GetSingleAsync(method);
+            return new SuccessDataResult<Cart>(result);
         }
 
         public IDataResult<List<Cart>> GetWhere(Expression<Func<Cart, bool>> method)
         {
-            throw new NotImplementedException();
+            var result = _cartReadRepository.GetWhere(method);
+            return new SuccessDataResult<List<Cart>>( result.ToList());
         }
 
         public Task<IResult> SaveAsync()
@@ -74,7 +99,12 @@ namespace Busines.Concrete
 
         public async Task<IResult> Update(Cart entity)
         {
-            throw new NotImplementedException();
+            var result = _cartWriteRepository.Update(entity);
+            await _cartWriteRepository.SaveAsync();
+            if(result)
+                return new SuccessResult(Messages.UpdatedSuccessfully);
+            return new ErrorResult(Messages.Error);
+
         }
     }
 }

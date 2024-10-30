@@ -1,4 +1,5 @@
 ﻿using Busines.Abstract;
+using Busines.Constan;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,59 +23,78 @@ namespace Busines.Concrete
             _userWriteRepository = userWriteRepository;
         }
 
-        public Task<IResult> AddAsync(User entity)
+        public async Task<IResult> AddAsync(User entity)
         {
-            throw new NotImplementedException();
+            var result = await _userWriteRepository.AddAsync(entity);
+            await _userWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.AddedSuccesfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public Task<IResult> AddRangeAsync(List<User> entities)
+        public async Task<IResult> AddRangeAsync(List<User> entities)
         {
-            throw new NotImplementedException();
+            var result = await _userWriteRepository.AddRangeAsync(entities);
+            await _userWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.AddedSuccesfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public IResult Delete(User entity)
+        public async Task<IResult> Delete(User entity)
         {
-            throw new NotImplementedException();
+            var result =_userWriteRepository.Delete(entity);
+            await _userWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public Task<IResult> Delete(int id)
+        public async Task<IResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            var result = await _userWriteRepository.Delete(id);
+            await _userWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public IResult DeleteRange(List<User> entities)
+        public async Task<IResult> DeleteRange(List<User> entities)
         {
-            throw new NotImplementedException();
+            var result = _userWriteRepository.DeleteRange(entities);
+            await _userWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
         public IDataResult<List<User>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<User>>(_userReadRepository.GetAll().ToList());
         }
 
-        public Task<IDataResult<User>> GetByIdAsync(int id)
+        public async Task<IDataResult<User>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<User>(await _userReadRepository.GetByIdAsync(id));
         }
 
-        public Task<IDataResult<User>> GetSingleAsync(Expression<Func<User, bool>> method)
+        public async Task<IDataResult<User>> GetSingleAsync(Expression<Func<User, bool>> method)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<User>(await _userReadRepository.GetSingleAsync(method));
         }
 
         public IDataResult<List<User>> GetWhere(Expression<Func<User, bool>> method)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<User>>(_userReadRepository.GetWhere(method).ToList());
         }
 
-        public Task<IResult> SaveAsync()
+        public async Task<IResult> Update(User entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IResult> Update(User entity)
-        {
-            throw new NotImplementedException();
+            var result = _userWriteRepository.Update(entity);
+            await _userWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.UpdatedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
     }
 }

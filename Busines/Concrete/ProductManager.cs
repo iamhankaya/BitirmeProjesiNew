@@ -44,10 +44,10 @@ namespace Business.Concrete
                 return new ErrorResult("Eklenme sırasında hata.");
         }
 
-        public IResult Delete(Product entity)
+        public async Task<IResult> Delete(Product entity)
         {
             var result = _productWriteRepository.Delete(entity);
-            _productWriteRepository.SaveAsync();
+            await _productWriteRepository.SaveAsync();
             if (result)
                 return new SuccessResult("Başarıyla silindi.");
             return new ErrorResult("Silme sırasında hata.");
@@ -62,10 +62,10 @@ namespace Business.Concrete
             return new ErrorResult("Silme sırasında hata.");
         }
 
-        public IResult DeleteRange(List<Product> entities)
+        public async Task<IResult> DeleteRange(List<Product> entities)
         {
             var result = _productWriteRepository.DeleteRange(entities);
-            _productWriteRepository.SaveAsync();
+           await _productWriteRepository.SaveAsync();
             if (result)
                 return new SuccessResult("Dizi başarıyla silindi.");
             return new ErrorResult("Silme sırasında hata.");

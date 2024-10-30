@@ -1,4 +1,5 @@
 ﻿using Busines.Abstract;
+using Busines.Constan;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,59 +23,81 @@ namespace Busines.Concrete
             _creditCardWriteRepository = creditCardWriteRepository;
         }
 
-        public Task<IResult> AddAsync(CreditCard entity)
+        public async Task<IResult> AddAsync(CreditCard entity)
         {
-            throw new NotImplementedException();
+            var result = await _creditCardWriteRepository.AddAsync(entity);
+            await _creditCardWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.AddedSuccesfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public Task<IResult> AddRangeAsync(List<CreditCard> entities)
+        public async Task<IResult> AddRangeAsync(List<CreditCard> entities)
         {
-            throw new NotImplementedException();
+            var result = await _creditCardWriteRepository.AddRangeAsync(entities);
+            await _creditCardWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.AddedSuccesfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public IResult Delete(CreditCard entity)
+        public async Task<IResult> Delete(CreditCard entity)
         {
-            throw new NotImplementedException();
+            var result =  _creditCardWriteRepository.Delete(entity);
+            await _creditCardWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public Task<IResult> Delete(int id)
+        public async Task<IResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            var result = await _creditCardWriteRepository.Delete(id);
+            await _creditCardWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public IResult DeleteRange(List<CreditCard> entities)
+        public async Task<IResult> DeleteRange(List<CreditCard> entities)
         {
-            throw new NotImplementedException();
+            var result = _creditCardWriteRepository.DeleteRange(entities);
+            await _creditCardWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
         public IDataResult<List<CreditCard>> GetAll()
         {
-            throw new NotImplementedException();
+            var result = _creditCardReadRepository.GetAll();
+            return new SuccessDataResult<List<CreditCard>>(result.ToList());
         }
 
-        public Task<IDataResult<CreditCard>> GetByIdAsync(int id)
+        public async Task<IDataResult<CreditCard>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<CreditCard>(await _creditCardReadRepository.GetByIdAsync(id));
         }
 
-        public Task<IDataResult<CreditCard>> GetSingleAsync(Expression<Func<CreditCard, bool>> method)
+        public async Task<IDataResult<CreditCard>> GetSingleAsync(Expression<Func<CreditCard, bool>> method)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<CreditCard>(await _creditCardReadRepository.GetSingleAsync(method));
         }
 
         public IDataResult<List<CreditCard>> GetWhere(Expression<Func<CreditCard, bool>> method)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<CreditCard>>(_creditCardReadRepository.GetWhere(method).ToList());
         }
 
-        public Task<IResult> SaveAsync()
-        {
-            throw new NotImplementedException();
-        }
+        
 
-        public Task<IResult> Update(CreditCard entity)
+        public async Task<IResult> Update(CreditCard entity)
         {
-            throw new NotImplementedException();
+            var result = _creditCardWriteRepository.Update(entity);
+            await _creditCardWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.UpdatedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
     }
 }

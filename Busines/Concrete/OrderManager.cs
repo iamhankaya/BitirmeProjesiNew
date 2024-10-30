@@ -1,4 +1,5 @@
 ﻿using Busines.Abstract;
+using Busines.Constan;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,59 +23,78 @@ namespace Busines.Concrete
             _orderWriteRepository = orderWriteRepository;
         }
 
-        public Task<IResult> AddAsync(Order entity)
+        public async Task<IResult> AddAsync(Order entity)
         {
-            throw new NotImplementedException();
+            var result = await _orderWriteRepository.AddAsync(entity);
+            await _orderWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.AddedSuccesfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public Task<IResult> AddRangeAsync(List<Order> entities)
+        public async Task<IResult> AddRangeAsync(List<Order> entities)
         {
-            throw new NotImplementedException();
+            var result = await _orderWriteRepository.AddRangeAsync(entities);
+            await _orderWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.AddedSuccesfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public IResult Delete(Order entity)
+        public async Task<IResult> Delete(Order entity)
         {
-            throw new NotImplementedException();
+            var result =  _orderWriteRepository.Delete(entity);
+            await _orderWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public Task<IResult> Delete(int id)
+        public async Task<IResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            var result = await _orderWriteRepository.Delete(id);
+            await _orderWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public IResult DeleteRange(List<Order> entities)
+        public async Task<IResult> DeleteRange(List<Order> entities)
         {
-            throw new NotImplementedException();
+            var result = _orderWriteRepository.DeleteRange(entities);
+            await _orderWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
         public IDataResult<List<Order>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Order>>(_orderReadRepository.GetAll().ToList());
         }
 
-        public Task<IDataResult<Order>> GetByIdAsync(int id)
+        public async Task<IDataResult<Order>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<Order>(await _orderReadRepository.GetByIdAsync(id));
         }
 
-        public Task<IDataResult<Order>> GetSingleAsync(Expression<Func<Order, bool>> method)
+        public async Task<IDataResult<Order>> GetSingleAsync(Expression<Func<Order, bool>> method)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<Order>(await _orderReadRepository.GetSingleAsync(method));
         }
 
         public IDataResult<List<Order>> GetWhere(Expression<Func<Order, bool>> method)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Order>>(_orderReadRepository.GetWhere(method).ToList());
         }
 
-        public Task<IResult> SaveAsync()
+        public async Task<IResult> Update(Order entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IResult> Update(Order entity)
-        {
-            throw new NotImplementedException();
+            var result = _orderWriteRepository.Update(entity);
+            await _orderWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.UpdatedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
     }
 }

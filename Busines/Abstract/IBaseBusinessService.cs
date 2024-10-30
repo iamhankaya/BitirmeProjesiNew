@@ -17,9 +17,9 @@ namespace Business.Abstract
         Task<IDataResult<T>> GetByIdAsync(int id);
         Task<IResult> AddAsync(T entity);
         Task<IResult> AddRangeAsync(List<T> entities);
-        IResult Delete (T entity);
+        Task<IResult> Delete (T entity);
         Task<IResult> Delete(int id);
-        IResult DeleteRange (List<T> entities);
+        Task<IResult> DeleteRange (List<T> entities);
         Task<IResult> Update (T entity);
       
 

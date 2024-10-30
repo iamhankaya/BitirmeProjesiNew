@@ -1,4 +1,5 @@
 ﻿using Busines.Abstract;
+using Busines.Constan;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,49 +23,69 @@ namespace Busines.Concrete
             _paymentWriteRepository = paymentWriteRepository;
         }
 
-        public Task<IResult> AddAsync(Payment entity)
+        public async Task<IResult> AddAsync(Payment entity)
         {
-            throw new NotImplementedException();
+            var result = await _paymentWriteRepository.AddAsync(entity);
+            await _paymentWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.AddedSuccesfully);
+            return new ErrorResult(Messages.Error); 
         }
 
-        public Task<IResult> AddRangeAsync(List<Payment> entities)
+        public async Task<IResult> AddRangeAsync(List<Payment> entities)
         {
-            throw new NotImplementedException();
+            var result = await _paymentWriteRepository.AddRangeAsync(entities);
+            await _paymentWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.AddedSuccesfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public IResult Delete(Payment entity)
+        public async Task<IResult> Delete(Payment entity)
         {
-            throw new NotImplementedException();
+            var result =  _paymentWriteRepository.Delete(entity);
+            await _paymentWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public Task<IResult> Delete(int id)
+        public async Task<IResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            var result = await _paymentWriteRepository.Delete(id);
+            await _paymentWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public IResult DeleteRange(List<Payment> entities)
+        public async Task<IResult> DeleteRange(List<Payment> entities)
         {
-            throw new NotImplementedException();
+            var result = _paymentWriteRepository.DeleteRange(entities);
+            await _paymentWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
         public IDataResult<List<Payment>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Payment>>(_paymentReadRepository.GetAll().ToList());
         }
 
-        public Task<IDataResult<Payment>> GetByIdAsync(int id)
+        public async Task<IDataResult<Payment>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<Payment>(await _paymentReadRepository.GetByIdAsync(id));
         }
 
-        public Task<IDataResult<Payment>> GetSingleAsync(Expression<Func<Payment, bool>> method)
+        public async Task<IDataResult<Payment>> GetSingleAsync(Expression<Func<Payment, bool>> method)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<Payment>(await _paymentReadRepository.GetSingleAsync(method));
         }
 
         public IDataResult<List<Payment>> GetWhere(Expression<Func<Payment, bool>> method)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Payment>>(_paymentReadRepository.GetWhere(method).ToList());
         }
 
         public Task<IResult> SaveAsync()
@@ -72,9 +93,13 @@ namespace Busines.Concrete
             throw new NotImplementedException();
         }
 
-        public Task<IResult> Update(Payment entity)
+        public async Task<IResult> Update(Payment entity)
         {
-            throw new NotImplementedException();
+            var result = _paymentWriteRepository.Update(entity);
+            await _paymentWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.UpdatedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
     }
 }

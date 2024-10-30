@@ -1,4 +1,5 @@
 ﻿using Busines.Abstract;
+using Busines.Constan;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,59 +23,78 @@ namespace Busines.Concrete
             _reviewWriteRepository = reviewWriteRepository;
         }
 
-        public Task<IResult> AddAsync(Review entity)
+        public async Task<IResult> AddAsync(Review entity)
         {
-            throw new NotImplementedException();
+            var result = await _reviewWriteRepository.AddAsync(entity);
+            await _reviewWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.AddedSuccesfully);
+            return new ErrorResult(Messages.Error);
+
         }
 
-        public Task<IResult> AddRangeAsync(List<Review> entities)
+        public async Task<IResult> AddRangeAsync(List<Review> entities)
         {
-            throw new NotImplementedException();
+            var result = await _reviewWriteRepository.AddRangeAsync(entities);
+            await _reviewWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.AddedSuccesfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public IResult Delete(Review entity)
+        public async Task<IResult> Delete(Review entity)
         {
-            throw new NotImplementedException();
+            var result =_reviewWriteRepository.Delete(entity);
+            await _reviewWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public Task<IResult> Delete(int id)
+        public async Task<IResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            var result = await _reviewWriteRepository.Delete(id);
+            await _reviewWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
-        public IResult DeleteRange(List<Review> entities)
+        public async Task<IResult> DeleteRange(List<Review> entities)
         {
-            throw new NotImplementedException();
+            var result = _reviewWriteRepository.DeleteRange(entities);
+            await _reviewWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.DeletedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
 
         public IDataResult<List<Review>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Review>>(_reviewReadRepository.GetAll().ToList());
         }
 
-        public Task<IDataResult<Review>> GetByIdAsync(int id)
+        public async Task<IDataResult<Review>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<Review>(await _reviewReadRepository.GetByIdAsync(id));
         }
 
-        public Task<IDataResult<Review>> GetSingleAsync(Expression<Func<Review, bool>> method)
+        public async Task<IDataResult<Review>> GetSingleAsync(Expression<Func<Review, bool>> method)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<Review>(await _reviewReadRepository.GetSingleAsync(method));
         }
 
         public IDataResult<List<Review>> GetWhere(Expression<Func<Review, bool>> method)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Review>>(_reviewReadRepository.GetWhere(method).ToList());
         }
-
-        public Task<IResult> SaveAsync()
+        public async Task<IResult> Update(Review entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IResult> Update(Review entity)
-        {
-            throw new NotImplementedException();
+            var result =_reviewWriteRepository.Update(entity);
+            await _reviewWriteRepository.SaveAsync();
+            if (result)
+                return new SuccessResult(Messages.UpdatedSuccessfully);
+            return new ErrorResult(Messages.Error);
         }
     }
 }
