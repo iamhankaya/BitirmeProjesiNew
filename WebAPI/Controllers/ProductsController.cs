@@ -16,18 +16,8 @@ namespace WebAPI.Controllers
             _productService = productService;
         }
         [HttpPost("add")]
-        public async Task<IActionResult> Add()
+        public async Task<IActionResult> Add(Product product)
         {
-            Product product = new Product
-            {
-                categoryId = 2,
-                description = "Test",
-                name = "Test",
-                price = 20,
-                stockQuantity = 20,
-                createTime = DateTime.Now,
-            };
-
             var result = await _productService.AddAsync(product);
             if (result.Success)
             {
@@ -76,57 +66,17 @@ namespace WebAPI.Controllers
 
         [HttpPost("addrangeasync")]
 
-        public async Task<IActionResult> AddRange()
+        public async Task<IActionResult> AddRange(List<Product> products)
         {
-            Product product1 = new Product
-            {
-                categoryId = 3,
-                description = "Test",
-                name = "Test",
-                price = 20,
-                stockQuantity = 20,
-                createTime = DateTime.Now,
-            };
-            Product product2 = new Product
-            {
-                categoryId = 2,
-                description = "Test",
-                name = "Test",
-                price = 20,
-                stockQuantity = 20,
-                createTime = DateTime.Now,
-            };
-            Product product3 = new Product
-            {
-                categoryId = 2,
-                description = "Test",
-                name = "Test",
-                price = 20,
-                stockQuantity = 20,
-                createTime = DateTime.Now,
-            };
-            List<Product> products = new List<Product>();
-            products.Add(product1);
-            products.Add(product2);
-            products.Add(product3);
             var result = await _productService.AddRangeAsync(products);
             if(result.Success) 
                 return Ok(result);
             return BadRequest(result);
         }
         [HttpPost("update")]
-        public async Task<IActionResult> Update()
+        public async Task<IActionResult> Update(Product product)
         {
-            Product product = new Product
-            {
-                id = 1002,
-                categoryId = 3,
-                description = "Update",
-                name = "Update",
-                price = 20,
-                stockQuantity = 20,
-                createTime = DateTime.Now,
-            };
+
             var result = await _productService.Update(product);
             if(result.Success) 
                 return Ok(result);
@@ -134,10 +84,28 @@ namespace WebAPI.Controllers
         }
         [HttpDelete("delete")]
 
-        public IActionResult Delete(Product product)
+        public async Task<IActionResult> Delete(Product product)
         {
-            var result = _productService.Delete(product);
+            var result = await _productService.Delete(product);
             if (result.Success) 
+                return Ok(result);
+            return BadRequest(result);
+        }
+
+        [HttpDelete("deleteid")]
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _productService.Delete(id);
+            if (result.Success)
+                return Ok(result);
+            return BadRequest(result);
+        }
+        [HttpDelete("deleterange")]
+        public async Task<IActionResult> DeleteRange(List<Product> products)
+        {
+            var result = await _productService.DeleteRange(products);
+            if (result.Success)
                 return Ok(result);
             return BadRequest(result);
         }
