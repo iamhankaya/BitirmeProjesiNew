@@ -10,6 +10,20 @@ namespace DataAccess.Concrete.EntityFramework.Repositories
 {
     public class UserReadRepository : ReadRepository<User>, IUserReadRepository
     {
-        public UserReadRepository(BitirmeETicaretDBContext context) : base(context) { }
+        private readonly BitirmeETicaretDBContext _context;
+        public UserReadRepository(BitirmeETicaretDBContext context) : base(context) 
+        {
+            _context = context;
+        }
+
+        public List<OperationClaim> GetOperationClaims(User user)
+        { 
+                   var result = from operationClaim in _context.OperationClaims
+                                join userOperationClaim in _context.UserOperationClaims
+                                    on operationClaim.id equals userOperationClaim.operationClaimId
+                                where userOperationClaim.userId == user.id
+                                select new OperationClaim { id = operationClaim.id, Name = operationClaim.Name };
+                   return result.ToList();   
+        }
     }
 }

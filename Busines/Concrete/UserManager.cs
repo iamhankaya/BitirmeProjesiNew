@@ -2,6 +2,7 @@
 using Busines.Constan;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -76,6 +77,12 @@ namespace Busines.Concrete
         public async Task<IDataResult<User>> GetByIdAsync(int id)
         {
             return new SuccessDataResult<User>(await _userReadRepository.GetByIdAsync(id));
+        }
+
+        public IDataResult<List<OperationClaim>> GetClaims(User user)
+        {
+            var result = _userReadRepository.GetOperationClaims(user);
+            return new SuccessDataResult<List<OperationClaim>>(result);
         }
 
         public async Task<IDataResult<User>> GetSingleAsync(Expression<Func<User, bool>> method)

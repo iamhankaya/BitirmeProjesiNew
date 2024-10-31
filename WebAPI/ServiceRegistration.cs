@@ -3,6 +3,7 @@ using Busines.Abstract;
 using Busines.Concrete;
 using Business.Abstract;
 using Business.Concrete;
+using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +48,10 @@ namespace DataAccess.Concrete.EntityFramework
             services.AddScoped<ICreditCardReadRepository, CreditCardReadRepository>();
             services.AddScoped<ICreditCardWriteRepository, CreditCardWriteRepository>();
             services.AddScoped<ICreditCardService,CreditCardManager>();
+
+            services.AddScoped<ITokenHelper,JwtHelper>();
+
+            services.AddScoped<IAuthService, AuthManager>();
         }
     }
 }
