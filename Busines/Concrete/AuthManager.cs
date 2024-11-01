@@ -1,6 +1,8 @@
 ﻿using Busines.Abstract;
 using Busines.Constan;
 using Business.Abstract;
+using Business.ValidationRules;
+using Core.Aspects.Validation;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JWT;
@@ -25,6 +27,7 @@ namespace Business.Concrete
             _tokenHelper = tokenHelper;
         }
 
+        [ValidationAspect(typeof(UserValidator))]
         public async Task<IDataResult<User>> Register(UserForRegisterDTO userForRegisterDto)
         {
             byte[] passwordHash, passwordSalt;

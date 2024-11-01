@@ -31,12 +31,14 @@ namespace DataAccess.Concrete.EntityFramework
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var datas = ChangeTracker.Entries<BaseEntity>();
+            var result = 0;
             foreach (var data in datas)
             {
                 _ = data.State switch
                 {
                     EntityState.Added => data.Entity.createTime = DateTime.Now,
                     EntityState.Modified => data.Entity.updateTime = DateTime.Now,
+                    EntityState.Deleted => data.Entity.updateTime =DateTime.Now,
                 };
             }
 

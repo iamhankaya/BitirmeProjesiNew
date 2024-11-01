@@ -52,6 +52,8 @@ namespace DataAccess.Concrete.EntityFramework
             services.AddScoped<ITokenHelper,JwtHelper>();
 
             services.AddScoped<IAuthService, AuthManager>();
+
+
         }
     }
 }

@@ -53,7 +53,7 @@ namespace Business.Concrete
             return new ErrorResult("Silme sırasında hata.");
         }
 
-        public async Task<IResult> Delete(int id)
+        public async Task<IResult> DeleteAsync(int id)
         {
             var result = await _productWriteRepository.Delete(id);
             await _productWriteRepository.SaveAsync();

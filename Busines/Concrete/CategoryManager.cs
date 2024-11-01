@@ -50,7 +50,7 @@ namespace Busines.Concrete
             return new ErrorResult(Messages.Error);
         }
 
-        public async Task<IResult> Delete(int id)
+        public async Task<IResult> DeleteAsync(int id)
         {
             var result = await _categoryWriteRepository.Delete(id);
             await _categoryWriteRepository.SaveAsync();

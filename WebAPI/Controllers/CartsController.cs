@@ -98,7 +98,7 @@ namespace WebAPI.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _cartService.Delete(id);
+            var result = await _cartService.DeleteAsync(id);
             if (result.Success)
                 return Ok(result);
             return BadRequest(result);
