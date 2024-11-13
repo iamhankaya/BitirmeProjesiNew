@@ -11,7 +11,7 @@ namespace Entities.Concrete
     public class Cart : BaseEntity
     {
         public int userId { get; set; }
-        public List<Product> products { get; set; }
+        public List<Product> products { get; set; } = new List<Product>();
         public float totalAmount { get; set; }
 
     }

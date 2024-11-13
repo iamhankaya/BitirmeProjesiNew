@@ -11,7 +11,7 @@ namespace Entities.Concrete
     {
 
         public int userId { get; set; }
-        public List<Product> products { get; set; }
+        public List<Product> products { get; set; } = new List<Product>();
         public float totalAmount { get; set; }
         public DateTime orderDate { get; set; }
         public string address { get; set; }

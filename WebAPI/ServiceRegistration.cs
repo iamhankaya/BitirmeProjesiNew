@@ -15,7 +15,7 @@ namespace DataAccess.Concrete.EntityFramework
         public static void AddDataAccessServices(this IServiceCollection services)
         {
             services.AddDbContext<BitirmeETicaretDBContext>(options => options.
-           UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=BitirmeETicaretDB;Trusted_Connection=true"));
+           UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=BitirmeETicaretDB;Trusted_Connection=true"), ServiceLifetime.Transient);
 
             services.AddScoped<IProductReadRepository, ProductReadRepository>();
             services.AddScoped<IProductWriteRepository, ProductWriteRepository>();

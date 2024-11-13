@@ -37,9 +37,9 @@ namespace WebAPI.Controllers
 
         [HttpGet("getwhere")]
 
-        public IActionResult GetWhere()
+        public IActionResult GetWhere(int userId)
         {
-            var result = _creditCardService.GetWhere(p => p.id == 2);
+            var result = _creditCardService.GetWhere(p => p.userId == userId);
             if (result.Success)
                 return Ok(result);
             return BadRequest(result);

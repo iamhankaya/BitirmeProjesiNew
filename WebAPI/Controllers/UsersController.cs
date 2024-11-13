@@ -37,9 +37,9 @@ namespace WebAPI.Controllers
 
         [HttpGet("getwhere")]
 
-        public IActionResult GetWhere()
+        public IActionResult GetWhere(string fullName)
         {
-            var result = _userService.GetWhere(p => p.id == 2);
+            var result = _userService.GetWhere(p => p.name+" "+p.surname == fullName);
             if (result.Success)
                 return Ok(result);
             return BadRequest(result);

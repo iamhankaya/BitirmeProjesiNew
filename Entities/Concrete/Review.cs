@@ -14,7 +14,6 @@ namespace Entities.Concrete
         public int userId { get; set; }
         public int rating { get; set; }
         public string comment { get; set; }
-        public DateTime createTime { get; set; }
-        public DateTime updateTime { get; set; }
+
     }
 }

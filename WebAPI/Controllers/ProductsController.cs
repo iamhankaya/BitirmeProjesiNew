@@ -36,9 +36,9 @@ namespace WebAPI.Controllers
 
         [HttpGet("getwhere")]
 
-        public IActionResult GetWhere()
+        public IActionResult GetWhere(int categoryId)
         {
-            var result = _productService.GetWhere(p => p.id == 2);
+            var result = _productService.GetWhere(p => p.categoryId == categoryId);
             if(result.Success)
                 return Ok(result);
             return BadRequest(result);

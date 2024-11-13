@@ -11,8 +11,8 @@ namespace Entities.Concrete
     {
 
         public int categoryId { get; set; }
-        public List<Order>? orders { get; set; }
-        public List<Cart>? carts { get; set; }
+        public List<Order>? orders { get; set; } = new List<Order>();
+        public List<Cart>? carts { get; set; } = new List<Cart>();
         public string name { get; set; }
         public string description { get; set; }
         public int stockQuantity { get; set; }

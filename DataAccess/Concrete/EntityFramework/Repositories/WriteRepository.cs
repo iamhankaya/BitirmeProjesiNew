@@ -42,7 +42,9 @@ namespace DataAccess.Concrete.EntityFramework.Repositories
 
         public bool DeleteRange(List<T> model)
         {
-            Table.RemoveRange(model);
+            var ids = model.Select(e => e.id).ToList();
+            var entitiesToDelete = Table.Where(e => ids.Contains(e.id)).ToList();
+            Table.RemoveRange(entitiesToDelete);
             return true;
         }
         public async Task<bool> Delete(int id)
