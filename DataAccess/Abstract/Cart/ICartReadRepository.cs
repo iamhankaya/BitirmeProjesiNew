@@ -9,5 +9,6 @@ namespace DataAccess.Abstract
 {
     public interface ICartReadRepository:IReadRepository<Cart>
     {
+        Task<Cart> GetCartWithProductsAsync(int cartId);
     }
 }

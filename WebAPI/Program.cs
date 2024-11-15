@@ -6,13 +6,17 @@ using Core.Utilities.Security.JWT;
 using Autofac.Extensions.DependencyInjection;
 using Autofac;
 using Busines.DependencyResolvers.Autofac;
+using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddCors();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.MaxDepth = 128; // Varsayýlan 32, daha fazla derinlik gerekiyorsa arttýrabilirsiniz
+}); ;
 builder.Host.UseServiceProviderFactory(services => new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(builder => { builder.RegisterModule(new AutofacBusinessModule()); });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 

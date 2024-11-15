@@ -1,5 +1,6 @@
 ﻿using Busines.Abstract;
 using Business.Abstract;
+using Core.Utilities.Results;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,9 +19,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> Add(Cart entity)
+        public async Task<IActionResult> Add(Cart cart)
         {
-            var result = await _cartService.AddAsync(entity);
+            cart.totalAmount = 0;
+            var result = await _cartService.AddAsync(cart);
             if (result.Success)
             {
                 return Ok(result);
@@ -38,9 +40,9 @@ namespace WebAPI.Controllers
 
         [HttpGet("getwhere")]
 
-        public IActionResult GetWhere()
+        public IActionResult GetWhere(int userId)
         {
-            var result = _cartService.GetWhere(p => p.id == 2);
+            var result = _cartService.GetWhere(p => p.userId == userId);
             if (result.Success)
                 return Ok(result);
             return BadRequest(result);
@@ -48,9 +50,9 @@ namespace WebAPI.Controllers
 
         [HttpGet("getsingleasync")]
 
-        public async Task<IActionResult> GetSingleAsync()
+        public async Task<IActionResult> GetSingleAsync(int cartId)
         {
-            var result = await _cartService.GetSingleAsync(p => p.id == 1);
+            var result = await _cartService.GetSingleAsync(p => p.id == cartId);
             if (result.Success)
                 return Ok(result);
             return BadRequest(result);
@@ -84,6 +86,18 @@ namespace WebAPI.Controllers
                 return Ok(result);
             return BadRequest(result);
         }
+
+
+        [HttpPost("addProductToCart")]
+
+        public async Task<IActionResult> AddProductToCart(int cartId,Product product)
+        {
+            var result = await _cartService.AddProductToCart(cartId,product);
+            if (result.Success)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
         [HttpDelete("delete")]
 
         public async Task<IActionResult> Delete(Cart entity)

@@ -14,11 +14,12 @@ namespace Busines.Constan
         public static string UpdatedSuccessfully = "Başarıyla güncellendi";
         public static string DeletedSuccessfully = "Başarıyla silindi";
         public static string DataShownSuccessfully = "Başarıyla veriler listelendi";
-        internal static string UserRegistered = "Kullanıcı başarıyla kayıt oldu";
-        internal static string UserNotFound = "Kullanıcı bulunamadı.";
-        internal static string PasswordError = "Hatalı şifre";
-        internal static string SuccessfulLogin="Başarıyla giriş yapıldı";
-        internal static string UserAlreadyExists = "Kullanıcı zaten mevcut";
-        internal static string AccessTokenCreated="Token yaratıldı";
+        public static string UserRegistered = "Kullanıcı başarıyla kayıt oldu";
+        public static string UserNotFound = "Kullanıcı bulunamadı.";
+        public static string PasswordError = "Hatalı şifre";
+        public static string SuccessfulLogin="Başarıyla giriş yapıldı";
+        public static string UserAlreadyExists = "Kullanıcı zaten mevcut";
+        public static string AccessTokenCreated="Token yaratıldı";
+        public static string ProductSuccessfullyAddedToCart = "Ürün başarıyla sepete eklendi";
     }
 }

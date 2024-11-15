@@ -83,6 +83,7 @@ namespace WebAPI.Controllers
                 return Ok(result);
             return BadRequest(result);
         }
+
         [HttpDelete("delete")]
 
         public async Task<IActionResult> Delete(User entity)

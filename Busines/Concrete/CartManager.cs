@@ -32,6 +32,21 @@ namespace Busines.Concrete
             return new ErrorResult(Messages.Error);
         }
 
+        public async Task<IResult> AddProductToCart(int cartId, Product product)
+        {
+            var cartToAdd = _cartReadRepository.GetWhere(p => p.id == cartId).ToList();
+            if (cartToAdd != null)
+            {
+                cartToAdd[0].products.Add(product);
+                var result = _cartWriteRepository.Update(cartToAdd[0]);
+                await _cartWriteRepository.SaveAsync();
+                if (result)
+                    return new SuccessResult(Messages.ProductSuccessfullyAddedToCart);
+                return new ErrorResult(Messages.Error);
+            }
+            return new ErrorResult("Sepet bulunamadı");
+        }
+
         public async Task<IResult> AddRangeAsync(List<Cart> entities)
         {
             var result = await _cartWriteRepository.AddRangeAsync(entities);
@@ -88,8 +103,9 @@ namespace Busines.Concrete
 
         public IDataResult<List<Cart>> GetWhere(Expression<Func<Cart, bool>> method)
         {
-            var result = _cartReadRepository.GetWhere(method);
-            return new SuccessDataResult<List<Cart>>( result.ToList());
+            var result = _cartReadRepository.GetWhere(method).ToList();
+            List<Cart> newResult = new List<Cart> { _cartReadRepository.GetCartWithProductsAsync(result[0].id).Result };
+            return new SuccessDataResult<List<Cart>>(newResult);
         }
 
         public Task<IResult> SaveAsync()

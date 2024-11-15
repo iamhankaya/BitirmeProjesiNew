@@ -1,5 +1,6 @@
 ﻿using DataAccess.Abstract;
 using Entities.Abstract;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -34,7 +35,6 @@ namespace DataAccess.Concrete.EntityFramework.Repositories
             var query = Table.AsQueryable();
             if (!tracking)
                 query = query.AsNoTracking();
-
 
             return await query.FirstOrDefaultAsync(method);
         }
