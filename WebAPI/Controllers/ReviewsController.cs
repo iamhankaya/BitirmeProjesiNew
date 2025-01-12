@@ -35,11 +35,20 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getwhere")]
+        [HttpGet("getwhereproductid")]
 
-        public IActionResult GetWhere()
+        public IActionResult GetWhereProductId(int productId)
         {
-            var result = _reviewService.GetWhere(p => p.id == 2);
+            var result = _reviewService.GetWhere(p => p.productId == productId);
+            if (result.Success)
+                return Ok(result);
+            return BadRequest(result);
+        }
+        [HttpGet("getwhereuserid")]
+
+        public IActionResult GetWhereUserId(int userId)
+        {
+            var result = _reviewService.GetWhere(p => p.userId == userId);
             if (result.Success)
                 return Ok(result);
             return BadRequest(result);

@@ -12,7 +12,6 @@ namespace Entities.Concrete
     {
 
         public int userId { get; set; }
-        [JsonIgnore]
         public List<Product> products { get; set; } = new List<Product>();
         public float totalAmount { get; set; }
         public DateTime orderDate { get; set; }

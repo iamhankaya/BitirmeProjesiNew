@@ -9,5 +9,6 @@ namespace DataAccess.Abstract
 {
     public interface IOrderReadRepository : IReadRepository<Order>
     {
+        Task<Order> GetOrderWithProductsAsync(int orderId);
     }
 }

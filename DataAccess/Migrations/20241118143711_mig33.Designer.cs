@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(BitirmeETicaretDBContext))]
-    [Migration("20241031194836_mig1")]
-    partial class mig1
+    [Migration("20241118143711_mig33")]
+    partial class mig33
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

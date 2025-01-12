@@ -8,8 +8,10 @@ namespace Entities.Concrete
 {
     public class CartProduct
     {
-        public int cartId { get; set; }
-        public int productId { get; set; }
-        public int quantity { get; set; }
+        public int cartsId { get; set; }
+        public int productsId { get; set; }
+        public int count { get; set; }
+        public Cart Cart { get; set; }
+        public Product Product { get; set; }
     }
 }

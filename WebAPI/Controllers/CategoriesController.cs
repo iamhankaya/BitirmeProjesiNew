@@ -1,7 +1,12 @@
 ﻿using Busines.Abstract;
+using Core.Utilities.Helpers.Concrete.ForFile;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Net.Http;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -63,6 +68,36 @@ namespace WebAPI.Controllers
             if (result.Success)
                 return Ok(result);
             return BadRequest(result);
+        }
+
+
+        [HttpGet("searchcategorywithfile")]
+        public async Task<IActionResult> SearchCategoryWithFile(string imagePath)
+        {
+            var httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri("http://127.0.0.1:5000");
+
+            string filePath = "C:\\Users\\Metohanhan\\source\\repos\\BitirmeProjesi\\WebAPI\\wwwroot\\images\\"+imagePath;
+
+
+            using var content = new MultipartFormDataContent();
+
+            // Correcting the FileStream constructor
+            using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+            content.Add(new StreamContent(fileStream), "file", Path.GetFileName(filePath));
+
+            var response = await httpClient.PostAsync("/predict", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest("Zort");
+            }
         }
 
         [HttpPost("addrangeasync")]

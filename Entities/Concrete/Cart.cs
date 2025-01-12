@@ -14,6 +14,7 @@ namespace Entities.Concrete
         public int userId { get; set; }
 
         public List<Product> products { get; set; } = new List<Product>();
+
         public float totalAmount { get; set; }
 
     }

@@ -26,21 +26,21 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<User> Users { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
-
+        public DbSet<ProductImage> ProductImages { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var datas = ChangeTracker.Entries<BaseEntity[]>();
+            var datas = ChangeTracker.Entries<BaseEntity>();
             var result = 0;
             var i = 0;
             foreach (var data in datas)
             {
                 _ = data.State switch
                 {
-                    EntityState.Added => data.Entity[i].createTime = DateTime.Now,
-                    EntityState.Modified => data.Entity[i].updateTime = DateTime.Now,
-                    EntityState.Deleted => data.Entity[i].updateTime =DateTime.Now,
-                    EntityState.Unchanged => data.Entity[i].updateTime = DateTime.Now,
+                    EntityState.Added => data.Entity.createTime = DateTime.Now,
+                    EntityState.Modified => data.Entity.updateTime = DateTime.Now,
+                    EntityState.Deleted => data.Entity.updateTime =DateTime.Now,
+                    EntityState.Unchanged => data.Entity.updateTime = DateTime.Now,
                 };
                 i++;
             }

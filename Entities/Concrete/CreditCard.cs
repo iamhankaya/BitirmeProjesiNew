@@ -13,6 +13,11 @@ namespace Entities.Concrete
         public int creditCardNumber { get; set; }
         public int creditCardPassword { get; set; }
 
+        public int cvc { get; set; }
+        public float creditAmount { get; set; }
+
+        public string creditCardType { get; set; }
+
         public int userId { get; set; }
 
     }

@@ -46,9 +46,9 @@ namespace WebAPI.Controllers
 
         [HttpGet("getsingleasync")]
 
-        public async Task<IActionResult> GetSingleAsync()
+        public async Task<IActionResult> GetSingleAsync(int id)
         {
-            var result = await _productService.GetSingleAsync(p => p.id == 1);
+            var result = await _productService.GetSingleAsync(p => p.id == id);
             if(result.Success)
                 return Ok(result);
             return BadRequest(result);

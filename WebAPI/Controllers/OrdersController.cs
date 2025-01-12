@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> Add(Order entity)
         {
-            var result = await _orderService.AddAsync(entity);
+            var result = await _orderService.CreateOrder(entity);
             if (result.Success)
             {
                 return Ok(result);
@@ -37,9 +37,9 @@ namespace WebAPI.Controllers
 
         [HttpGet("getwhere")]
 
-        public IActionResult GetWhere()
+        public IActionResult GetWhere(int userId)
         {
-            var result = _orderService.GetWhere(p => p.id == 2);
+            var result = _orderService.GetWhere(p => p.userId == userId);
             if (result.Success)
                 return Ok(result);
             return BadRequest(result);

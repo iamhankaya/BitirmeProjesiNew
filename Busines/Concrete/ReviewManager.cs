@@ -25,10 +25,13 @@ namespace Busines.Concrete
 
         public async Task<IResult> AddAsync(Review entity)
         {
-            var result = await _reviewWriteRepository.AddAsync(entity);
-            await _reviewWriteRepository.SaveAsync();
-            if (result)
-                return new SuccessResult(Messages.AddedSuccesfully);
+            if(!(entity.rating<0 || entity.rating > 5)) 
+            {
+                var result = await _reviewWriteRepository.AddAsync(entity);
+                await _reviewWriteRepository.SaveAsync();
+                if (result)
+                    return new SuccessResult(Messages.AddedSuccesfully);
+            }
             return new ErrorResult(Messages.Error);
 
         }

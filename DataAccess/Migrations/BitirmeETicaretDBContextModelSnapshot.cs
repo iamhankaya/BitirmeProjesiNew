@@ -100,10 +100,20 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("createTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<float>("creditAmount")
+                        .HasColumnType("real");
+
                     b.Property<int>("creditCardNumber")
                         .HasColumnType("int");
 
                     b.Property<int>("creditCardPassword")
+                        .HasColumnType("int");
+
+                    b.Property<string>("creditCardType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("cvc")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("updateTime")
@@ -231,6 +241,12 @@ namespace DataAccess.Migrations
                     b.Property<float>("price")
                         .HasColumnType("real");
 
+                    b.Property<float>("reviewPoint")
+                        .HasColumnType("real");
+
+                    b.Property<int>("sellerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("stockQuantity")
                         .HasColumnType("int");
 
@@ -240,6 +256,32 @@ namespace DataAccess.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.ProductImage", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("createTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("updateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
+
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Review", b =>

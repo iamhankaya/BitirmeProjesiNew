@@ -21,5 +21,7 @@ namespace Busines.Constan
         public static string UserAlreadyExists = "Kullanıcı zaten mevcut";
         public static string AccessTokenCreated="Token yaratıldı";
         public static string ProductSuccessfullyAddedToCart = "Ürün başarıyla sepete eklendi";
+        internal static string ProductAlreadyInCart;
+        internal static string ProductSuccessfullyRemovedFromCart;
     }
 }

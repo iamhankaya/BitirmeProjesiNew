@@ -98,6 +98,16 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpPost("deleteProductFromCart")]
+
+        public async Task<IActionResult> DeleteProductFromCart(int cartId, Product product)
+        {
+            var result = await _cartService.DeleteProductFromCart(cartId, product);
+            if (result.Success)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
         [HttpDelete("delete")]
 
         public async Task<IActionResult> Delete(Cart entity)
